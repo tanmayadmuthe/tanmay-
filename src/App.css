@@ -1,0 +1,655 @@
+/* ===========================
+   App.css — Polished Dark Theme
+   Replace your current App.css
+   =========================== */
+
+/* --------------------------
+   Design tokens
+   -------------------------- */
+:root {
+  --bg: #050607;
+  --panel: #0b0f12;
+  --muted: #93a7af;
+  --accent: #09c1d1;
+  --glass: rgba(255, 255, 255, 0.02);
+  --card: #0e1418;
+  --text: #eaf6fb;
+  --max-width: 1200px;
+  --nav-height: 72px;
+  --gutter: 24px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --transition-fast: 180ms;
+  --transition-medium: 320ms;
+}
+
+/* --------------------------
+   Base / Reset
+   -------------------------- */
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #040405 0%, #0b0f12 100%);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+  scroll-behavior: smooth;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.container {
+  width: min(var(--max-width), 92%);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* small helpers */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* --------------------------
+   Topbar (sticky) — compact & stable
+   -------------------------- */
+.topbar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  height: var(--nav-height);
+  z-index: 220;
+  display: flex;
+  align-items: center;
+  transition: background var(--transition-fast) ease,
+    box-shadow var(--transition-fast) ease, transform var(--transition-medium);
+  padding: 0;
+  pointer-events: auto;
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  width: 100%;
+}
+.topbar.scrolled {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  box-shadow: 0 10px 30px rgba(2, 6, 10, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+/* brand */
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--text);
+  padding-left: 4px;
+  font-size: 1rem;
+}
+
+/* top links */
+.top-links ul {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+.top-links a {
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast), transform var(--transition-fast),
+    background var(--transition-fast);
+}
+.top-links a:hover,
+.top-links a:focus {
+  color: var(--text);
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.02);
+  outline: none;
+}
+
+/* Brand hover small expand (subtle) */
+.brand-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+.brand-expand {
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height var(--transition-medium) ease,
+    opacity var(--transition-medium) ease;
+}
+.brand-container:hover .brand-expand,
+.brand-container:focus-within .brand-expand {
+  max-height: 48px;
+  opacity: 1;
+}
+
+/* --------------------------
+   Right rail - vertical links / social
+   -------------------------- */
+.right-rail {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  pointer-events: auto;
+}
+.rail-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.rail-links a {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+.rail-links a:hover {
+  color: var(--text);
+  transform: translateY(-3px);
+}
+
+.rail-social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rail-social a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  transition: transform var(--transition-fast),
+    background var(--transition-fast), color var(--transition-fast);
+}
+.rail-social a:hover {
+  transform: translateY(-4px);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* hide rails on small devices */
+@media (max-width: 920px) {
+  .right-rail {
+    display: none;
+  }
+  .top-links ul {
+    display: none;
+  }
+}
+
+/* --------------------------
+   HERO: split grid with bands + animations
+   -------------------------- */
+.hero-split {
+  position: relative;
+  min-height: calc(100vh - var(--nav-height));
+  display: block;
+  padding-top: calc(var(--nav-height) + 28px);
+  overflow: hidden;
+}
+
+/* subtle vertical column bands for layout echo */
+.bands {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 0;
+  pointer-events: none;
+}
+.bands .band {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.006),
+    rgba(255, 255, 255, 0.008)
+  );
+  opacity: 0.03;
+  transform-origin: center;
+  transition: transform 1.2s ease;
+}
+
+/* hero inner — grid */
+.hero-inner {
+  position: relative;
+  z-index: 12;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 48px;
+  align-items: center;
+  width: min(var(--max-width), 92%);
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* left panel (copy) */
+.hero-left {
+  padding: 20px 0;
+  max-width: 760px;
+}
+.eyebrow {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  margin-bottom: 14px;
+}
+
+/* stacked headline */
+.stacked {
+  display: block;
+  margin: 0 0 14px;
+  line-height: 0.95;
+  font-weight: 800;
+  font-size: clamp(48px, 8vw, 104px);
+  color: var(--text);
+  letter-spacing: -1px;
+}
+.stacked span {
+  display: block;
+}
+.stacked .accent {
+  color: var(--accent);
+  display: inline-block;
+  transform: translateY(-6px);
+}
+
+/* subtitle and CTAs */
+.hero-sub {
+  color: rgba(234, 246, 251, 0.88);
+  font-size: 1.02rem;
+  margin-bottom: 18px;
+  max-width: 62ch;
+}
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* buttons */
+.btn {
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast), background var(--transition-fast);
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--accent), #049aa7);
+  color: #041414;
+  box-shadow: 0 18px 45px rgba(2, 6, 10, 0.6);
+}
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* right panel: mockup + decorative dots */
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+/* mockup container */
+.mockup-wrap {
+  width: 420px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  box-shadow: 0 40px 110px rgba(2, 6, 10, 0.7);
+  transform-origin: center;
+  transition: transform var(--transition-medium) ease;
+}
+.mockup-wrap img {
+  width: 100%;
+  display: block;
+  transform: translateZ(0);
+}
+
+/* decorative dots — gentle float */
+.dot {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: transparent;
+  box-shadow: 0 8px 22px rgba(9, 193, 209, 0.06);
+  animation: float 6s ease-in-out infinite;
+}
+.dot-1 {
+  right: 36px;
+  top: 8%;
+  animation-delay: 0s;
+}
+.dot-2 {
+  right: 146px;
+  top: 36%;
+  width: 12px;
+  height: 12px;
+  animation-delay: 0.8s;
+}
+.dot-3 {
+  right: 68px;
+  bottom: 12%;
+  width: 10px;
+  height: 10px;
+  animation-delay: 1.6s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-8px) scale(0.98);
+    opacity: 0.94;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* subtle mockup idle animation */
+@keyframes mockupIdle {
+  0% {
+    transform: translateY(0) rotate(-0.2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-0.2deg);
+  }
+}
+.mockup-wrap {
+  animation: mockupIdle 8s ease-in-out infinite;
+}
+
+/* --------------------------
+   Hero entrance (staggered)
+   -------------------------- */
+/* per-element classes for stagger */
+.hero-left,
+.stacked,
+.hero-sub,
+.hero-ctas,
+.mockup-wrap {
+  will-change: transform, opacity;
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform var(--transition-medium) cubic-bezier(0.2, 0.9, 0.3, 1),
+    opacity var(--transition-medium) ease;
+}
+
+/* when loaded the JS should add .hero-ready on .hero-split (we will assume it or also animate on page load) */
+.hero-split.hero-ready .hero-left {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.06s;
+}
+.hero-split.hero-ready .stacked {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.12s;
+}
+.hero-split.hero-ready .hero-sub {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+.hero-split.hero-ready .hero-ctas {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.28s;
+}
+.hero-split.hero-ready .mockup-wrap {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.36s;
+}
+
+/* If .hero-ready is not added, provide a graceful CSS fallback after short delay */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --fallbackDelay: 120ms;
+  }
+  .hero-left {
+    animation: fadeUp 600ms ease var(--fallbackDelay) forwards;
+  }
+  .stacked {
+    animation: fadeUp 600ms ease calc(var(--fallbackDelay) + 80ms) forwards;
+  }
+  .hero-sub {
+    animation: fadeUp 600ms ease calc(var(--fallbackDelay) + 160ms) forwards;
+  }
+  .hero-ctas {
+    animation: fadeUp 600ms ease calc(var(--fallbackDelay) + 240ms) forwards;
+  }
+  .mockup-wrap {
+    animation: fadeUp 700ms ease calc(var(--fallbackDelay) + 320ms) forwards;
+  }
+}
+@keyframes fadeUp {
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --------------------------
+   Other sections (consistent)
+   -------------------------- */
+.section {
+  padding: 72px 0;
+  background: transparent;
+  color: var(--text);
+}
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.015),
+    rgba(255, 255, 255, 0.008)
+  );
+  padding: 18px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 30px rgba(2, 6, 10, 0.5);
+}
+
+/* timeline & project small tweaks */
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.timeline-point {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+}
+.project-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+.project-media {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+}
+
+/* contact form styling */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* footer */
+.site-footer {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--muted);
+  background: transparent;
+}
+
+/* --------------------------
+   Responsive
+   -------------------------- */
+@media (max-width: 1100px) {
+  .hero-inner {
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+  }
+  .mockup-wrap {
+    width: 360px;
+  }
+}
+@media (max-width: 920px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 28px 0;
+  }
+  .hero-right {
+    order: -1;
+    display: flex;
+    justify-content: center;
+  }
+  .bands {
+    display: none;
+  }
+  .top-links ul {
+    display: none;
+  }
+  .brand-expand {
+    display: none;
+  }
+  .stacked {
+    text-align: center;
+  }
+  .hero-sub {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+@media (max-width: 520px) {
+  .stacked {
+    font-size: clamp(32px, 12vw, 56px);
+  }
+  .mockup-wrap {
+    width: 88%;
+  }
+  .btn {
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+  .topbar {
+    height: 64px;
+  }
+}
+
+[tabindex]:focus,
+a:focus,
+button:focus {
+  outline: 3px solid rgba(9, 193, 209, 0.14);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

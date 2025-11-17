@@ -1,0 +1,33 @@
+:root {
+  --bg: #0b0f14;
+  --panel: #0f1720;
+  --muted: #9aa6b2;
+  --accent: #06b6d4;
+  --glass: rgba(255, 255, 255, 0.04);
+  --card: #0e1620;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #050608 0%, #0b0f14 100%);
+  color: #e6f0f6;
+  scroll-behavior: smooth;
+}
+a {
+  color: inherit;
+}
+button {
+  font-family: inherit;
+}
