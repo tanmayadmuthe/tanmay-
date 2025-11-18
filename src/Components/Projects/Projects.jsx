@@ -1,4 +1,3 @@
-import React from "react";
 import "./Projects.css";
 import {
   FaGithub,
@@ -18,8 +17,8 @@ const projectsData = [
     description:
       "AI-powered automated interview screening platform with real-time voice calls, Azure TTS/STT, and multi-metric candidate scoring.",
     icon: <FaRobot />,
-    link: "#",
-    github: "#",
+    link: "/projects",
+    github: "https://github.com/tanmayadmuthe/InterviewEasy",
   },
   {
     title: "Video Calling App",
@@ -27,8 +26,17 @@ const projectsData = [
     description:
       "Feature-rich video conferencing app with screen sharing, recording, and secure authentication via Clerk.",
     icon: <FaLaptopCode />,
-    link: "#",
-    github: "#",
+    link: "https://yoom-videocall-iota.vercel.app/",
+    github: "https://github.com/tanmayadmuthe/yoom-videocall",
+  },
+  {
+    title: "Hardware Design of Neural Network Architectures",
+    tech: ["Verilog", "Cadence", "CMOS", "Domino Logic"],
+    description:
+      "Designed a high-performance domino-logic standard cell library in SCL180nm CMOS, built key combinational and sequential blocks, and validated it by synthesizing a DNN and benchmarking PPA against standard industry cells.",
+    icon: <FaMicrochip />,
+    link: "/projects",
+    github: "/projects",
   },
   {
     title: "AI Web Scraper",
@@ -36,8 +44,8 @@ const projectsData = [
     description:
       "Dynamic scraper handling JS content, enriched with Gemini LLM for semantic HTML parsing and summarization.",
     icon: <FaCode />,
-    link: "#",
-    github: "#",
+    link: "/projects",
+    github: "https://github.com/tanmayadmuthe/Web-Scraper",
   },
   {
     title: "Gestational Diabetes AI",
@@ -45,17 +53,18 @@ const projectsData = [
     description:
       "Predictive models (Random Forest, SVM) for maternal health with 97% accuracy after hyperparameter tuning.",
     icon: <FaMicrochip />,
-    link: "#",
-    github: "#",
+    link: "/projects",
+    github: "https://github.com/tanmayadmuthe/Gestational-Diabetes-Prediction",
   },
   {
-    title: "Avian Climate Response",
+    title: "Avian Response to Climate Change",
     tech: ["R", "ggplot2", "Caret", "Random Forest"],
     description:
       "Analyzed 40 years of data to model avian habitat shifts under IPCC climate scenarios using ML in R.",
     icon: <FaCloud />,
-    link: "#",
-    github: "#",
+    link: "/projects",
+    github:
+      "https://github.com/tanmayadmuthe/Avian-Responses-to-Climate-Change",
   },
   {
     title: "Tea Leaf Disease ML",
@@ -63,8 +72,8 @@ const projectsData = [
     description:
       "Machine learning model for detecting diseases in tea leaves using image-based datasets for agricultural aid.",
     icon: <FaLeaf />,
-    link: "#",
-    github: "#",
+    link: "/projects",
+    github: "/projects",
   },
 ];
 
