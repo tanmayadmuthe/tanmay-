@@ -57,25 +57,21 @@ const NeonMeteors = () => {
           }
         } else {
           if (edge === 0) {
-            // TOP -> Down
             this.x = Math.random() * canvas.width;
             this.y = -this.length;
             this.vx = 0;
             this.vy = this.speed;
           } else if (edge === 1) {
-            // RIGHT -> Left
             this.x = canvas.width + this.length;
             this.y = Math.random() * canvas.height;
             this.vx = -this.speed;
             this.vy = 0;
           } else if (edge === 2) {
-            // BOTTOM -> Up
             this.x = Math.random() * canvas.width;
             this.y = canvas.height + this.length;
             this.vx = 0;
             this.vy = -this.speed;
           } else {
-            // LEFT -> Right
             this.x = -this.length;
             this.y = Math.random() * canvas.height;
             this.vx = this.speed;
@@ -116,11 +112,7 @@ const NeonMeteors = () => {
         for (let i = 0; i < this.trail.length - 1; i++) {
           const point = this.trail[i];
           const nextPoint = this.trail[i + 1];
-
-          // Fade logic
           const fade = (i / this.trail.length) * point.opacity * 0.3;
-
-          // Apply the specific color with the fade
           ctx.strokeStyle = `rgba(${this.color}, ${fade})`;
 
           ctx.beginPath();
