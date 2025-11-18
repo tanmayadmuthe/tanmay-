@@ -9,6 +9,15 @@ const NeonMeteors = () => {
     const ctx = canvas.getContext("2d");
     let animationFrameId;
 
+    // --- DEVICE DETECTION ---
+    // Check if the device is mobile (width < 768px)
+    const isMobile = window.innerWidth < 768;
+
+    // --- CONFIGURATION ---
+    // Desktop: 10 meteors (Full visuals)
+    // Mobile: 3 meteors (Prevents lag)
+    const MAX_METEORS = isMobile ? 3 : 10;
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -18,9 +27,12 @@ const NeonMeteors = () => {
     resizeCanvas();
 
     const meteors = [];
-    const MAX_METEORS = 10;
 
-    const NEON_PALETTE = ["0, 255, 255"];
+    const NEON_PALETTE = [
+      "0, 255, 255", // Cyan
+      "255, 0, 255", // Magenta
+      "0, 255, 127", // Spring Green
+    ];
 
     class Meteor {
       constructor(startOnScreen = false) {
@@ -29,16 +41,22 @@ const NeonMeteors = () => {
 
       reset(startOnScreen = false) {
         const edge = Math.floor(Math.random() * 4);
-
         this.color =
           NEON_PALETTE[Math.floor(Math.random() * NEON_PALETTE.length)];
 
-        this.length = Math.random() * 450 + 150;
-        this.speed = Math.random() * 3 + 2;
+        // Desktop: Long trails (450px) | Mobile: Shorter (200px)
+        this.length = Math.random() * (isMobile ? 200 : 450) + 150;
+
+        // Desktop: Fast (3-5) | Mobile: Slightly slower (2-4)
+        this.speed = Math.random() * (isMobile ? 2 : 3) + 2;
+
         this.opacity = Math.random() * 0.5 + 0.5;
         this.trail = [];
-        this.maxTrail = 50;
 
+        // Desktop: Smooth long trail (50 points) | Mobile: Optimized (20 points)
+        this.maxTrail = isMobile ? 20 : 50;
+
+        // Spawn Logic
         if (startOnScreen) {
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
@@ -83,11 +101,8 @@ const NeonMeteors = () => {
       update() {
         this.x += this.vx;
         this.y += this.vy;
-
         this.trail.push({ x: this.x, y: this.y, opacity: this.opacity });
-        if (this.trail.length > this.maxTrail) {
-          this.trail.shift();
-        }
+        if (this.trail.length > this.maxTrail) this.trail.shift();
 
         if (
           this.x < -this.length * 2 ||
@@ -104,23 +119,29 @@ const NeonMeteors = () => {
         const glowColor = `rgba(${this.color}, 0.2)`;
 
         ctx.strokeStyle = baseColor;
-        ctx.lineWidth = 7;
+        // Desktop: Thick (7px) | Mobile: Thinner (3px)
+        ctx.lineWidth = isMobile ? 3 : 7;
         ctx.lineCap = "round";
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = glowColor;
+
+        // --- CRITICAL PERFORMANCE CHECK ---
+        // Only enable expensive shadowBlur on Desktop
+        if (!isMobile) {
+          ctx.shadowBlur = 20;
+          ctx.shadowColor = glowColor;
+        } else {
+          ctx.shadowBlur = 0;
+        }
 
         for (let i = 0; i < this.trail.length - 1; i++) {
           const point = this.trail[i];
           const nextPoint = this.trail[i + 1];
           const fade = (i / this.trail.length) * point.opacity * 0.3;
           ctx.strokeStyle = `rgba(${this.color}, ${fade})`;
-
           ctx.beginPath();
           ctx.moveTo(point.x, point.y);
           ctx.lineTo(nextPoint.x, nextPoint.y);
           ctx.stroke();
         }
-
         ctx.shadowBlur = 0;
       }
     }
