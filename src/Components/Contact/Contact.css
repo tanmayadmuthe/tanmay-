@@ -1,5 +1,10 @@
 .contact-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   max-width: 100%;
   padding: 0 10%;
   display: flex;
