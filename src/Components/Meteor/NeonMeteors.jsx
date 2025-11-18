@@ -18,9 +18,9 @@ const NeonMeteors = () => {
     resizeCanvas();
 
     const meteors = [];
-    const MAX_METEORS = 10; // Keeping it low for clean look
-    const NEON_COLOR = "rgba(0, 255, 255, 1)";
-    const NEON_GLOW = "rgba(0, 255, 255, 0.5)";
+    const MAX_METEORS = 10;
+
+    const NEON_PALETTE = ["0, 255, 255"];
 
     class Meteor {
       constructor(startOnScreen = false) {
@@ -30,37 +30,32 @@ const NeonMeteors = () => {
       reset(startOnScreen = false) {
         const edge = Math.floor(Math.random() * 4);
 
-        this.length = Math.random() * 400 + 150; // Huge size
-        this.speed = Math.random() * 7 + 2; // Fast speed
+        this.color =
+          NEON_PALETTE[Math.floor(Math.random() * NEON_PALETTE.length)];
+
+        this.length = Math.random() * 450 + 150;
+        this.speed = Math.random() * 3 + 2;
         this.opacity = Math.random() * 0.5 + 0.5;
         this.trail = [];
         this.maxTrail = 50;
 
-        // --- FIX: Spawn logic ---
         if (startOnScreen) {
-          // Force spawn anywhere on screen for instant visibility
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
-
-          // Give random straight direction
           if (edge === 0) {
             this.vx = 0;
             this.vy = this.speed;
-          } // Down
-          else if (edge === 1) {
+          } else if (edge === 1) {
             this.vx = -this.speed;
             this.vy = 0;
-          } // Left
-          else if (edge === 2) {
+          } else if (edge === 2) {
             this.vx = 0;
             this.vy = -this.speed;
-          } // Up
-          else {
+          } else {
             this.vx = this.speed;
             this.vy = 0;
-          } // Right
+          }
         } else {
-          // Normal spawn from edges
           if (edge === 0) {
             // TOP -> Down
             this.x = Math.random() * canvas.width;
@@ -98,7 +93,6 @@ const NeonMeteors = () => {
           this.trail.shift();
         }
 
-        // Reset if strictly off-screen
         if (
           this.x < -this.length * 2 ||
           this.x > canvas.width + this.length * 2 ||
@@ -110,21 +104,25 @@ const NeonMeteors = () => {
       }
 
       draw() {
-        ctx.strokeStyle = NEON_COLOR;
+        const baseColor = `rgba(${this.color}, 0.4)`;
+        const glowColor = `rgba(${this.color}, 0.2)`;
+
+        ctx.strokeStyle = baseColor;
         ctx.lineWidth = 7;
         ctx.lineCap = "round";
         ctx.shadowBlur = 20;
-        ctx.shadowColor = NEON_GLOW;
+        ctx.shadowColor = glowColor;
 
-        // Draw Trail
         for (let i = 0; i < this.trail.length - 1; i++) {
           const point = this.trail[i];
           const nextPoint = this.trail[i + 1];
 
-          // Calculate fade based on trail position
-          const fade = (i / this.trail.length) * point.opacity;
+          // Fade logic
+          const fade = (i / this.trail.length) * point.opacity * 0.3;
 
-          ctx.strokeStyle = `rgba(0, 255, 255, ${fade})`;
+          // Apply the specific color with the fade
+          ctx.strokeStyle = `rgba(${this.color}, ${fade})`;
+
           ctx.beginPath();
           ctx.moveTo(point.x, point.y);
           ctx.lineTo(nextPoint.x, nextPoint.y);
@@ -134,6 +132,7 @@ const NeonMeteors = () => {
         ctx.shadowBlur = 0;
       }
     }
+
     for (let i = 0; i < MAX_METEORS; i++) {
       meteors.push(new Meteor(true));
     }

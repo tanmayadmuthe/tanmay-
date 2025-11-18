@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
 import { FaCode, FaCoffee, FaGamepad } from "react-icons/fa";
-import { MdMovieFilter } from "react-icons/md";
+import { MdMovieFilter, MdOutlineModeOfTravel } from "react-icons/md";
 
 const titlesData = [
   { icon: <FaCode />, text: "Developer" },
   { icon: <MdMovieFilter />, text: "Anime Nerd" },
   { icon: <FaCoffee />, text: "Coffee Addict" },
   { icon: <FaGamepad />, text: "Gamer" },
+  { icon: <MdOutlineModeOfTravel />, text: "Traveler" },
 ];
 
 const Homepage = () => {
@@ -16,7 +17,6 @@ const Homepage = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // Always enable transition before moving to the next slide
       setIsTransitioning(true);
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }, 2500);
@@ -38,7 +38,7 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="hero-content">
-        <h1>I am Tanmay.</h1>
+        <h1>I am Tanmay</h1>
         <div className="title-slider">
           <div
             className="title-wrapper"

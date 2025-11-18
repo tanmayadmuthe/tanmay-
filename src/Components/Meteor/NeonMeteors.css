@@ -4,7 +4,6 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Use z-index 0. We will move the content to z-index 1 */
-  z-index: 0;
-  pointer-events: none; /* Lets mouse clicks pass through */
+  z-index: -1;
+  pointer-events: none;
 }
