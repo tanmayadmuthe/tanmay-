@@ -9,30 +9,36 @@ const NeonMeteors = () => {
     const ctx = canvas.getContext("2d");
     let animationFrameId;
 
-    // --- DEVICE DETECTION ---
-    // Check if the device is mobile (width < 768px)
+    // --- OPTIMIZATION VARIABLES ---
     const isMobile = window.innerWidth < 768;
+    const MAX_METEORS = isMobile ? 4 : 10;
 
-    // --- CONFIGURATION ---
-    // Desktop: 10 meteors (Full visuals)
-    // Mobile: 3 meteors (Prevents lag)
-    const MAX_METEORS = isMobile ? 3 : 10;
+    // FPS Throttling
+    let lastTime = 0;
+    const fpsInterval = isMobile ? 1000 / 30 : 1000 / 60; // 30FPS on mobile, 60FPS on Desktop
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // CRITICAL FIX: Force low resolution on mobile
+      // Mobile screens (Retina) usually have devicePixelRatio of 2 or 3.
+      // We force it to 1 to save massive GPU power.
+      const dpr = isMobile ? 1 : window.devicePixelRatio || 1;
+
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+
+      // Scale context to match dpr so coordinates work as expected
+      ctx.scale(dpr, dpr);
+
+      // Ensure CSS matches window size
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
     };
 
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
     const meteors = [];
-
-    const NEON_PALETTE = [
-      "0, 255, 255", // Cyan
-      "255, 0, 255", // Magenta
-      "0, 255, 127", // Spring Green
-    ];
+    const NEON_PALETTE = ["0, 255, 255", "255, 0, 255", "0, 255, 127"];
 
     class Meteor {
       constructor(startOnScreen = false) {
@@ -44,22 +50,15 @@ const NeonMeteors = () => {
         this.color =
           NEON_PALETTE[Math.floor(Math.random() * NEON_PALETTE.length)];
 
-        // Desktop: Long trails (450px) | Mobile: Shorter (200px)
-        this.length = Math.random() * (isMobile ? 200 : 450) + 150;
-
-        // Desktop: Fast (3-5) | Mobile: Slightly slower (2-4)
+        this.length = Math.random() * (isMobile ? 150 : 450) + 100;
         this.speed = Math.random() * (isMobile ? 2 : 3) + 2;
-
         this.opacity = Math.random() * 0.5 + 0.5;
         this.trail = [];
+        this.maxTrail = isMobile ? 15 : 50; // Reduce memory usage
 
-        // Desktop: Smooth long trail (50 points) | Mobile: Optimized (20 points)
-        this.maxTrail = isMobile ? 20 : 50;
-
-        // Spawn Logic
         if (startOnScreen) {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
+          this.x = Math.random() * window.innerWidth;
+          this.y = Math.random() * window.innerHeight;
           if (edge === 0) {
             this.vx = 0;
             this.vy = this.speed;
@@ -75,23 +74,23 @@ const NeonMeteors = () => {
           }
         } else {
           if (edge === 0) {
-            this.x = Math.random() * canvas.width;
+            this.x = Math.random() * window.innerWidth;
             this.y = -this.length;
             this.vx = 0;
             this.vy = this.speed;
           } else if (edge === 1) {
-            this.x = canvas.width + this.length;
-            this.y = Math.random() * canvas.height;
+            this.x = window.innerWidth + this.length;
+            this.y = Math.random() * window.innerHeight;
             this.vx = -this.speed;
             this.vy = 0;
           } else if (edge === 2) {
-            this.x = Math.random() * canvas.width;
-            this.y = canvas.height + this.length;
+            this.x = Math.random() * window.innerWidth;
+            this.y = window.innerHeight + this.length;
             this.vx = 0;
             this.vy = -this.speed;
           } else {
             this.x = -this.length;
-            this.y = Math.random() * canvas.height;
+            this.y = Math.random() * window.innerHeight;
             this.vx = this.speed;
             this.vy = 0;
           }
@@ -106,9 +105,9 @@ const NeonMeteors = () => {
 
         if (
           this.x < -this.length * 2 ||
-          this.x > canvas.width + this.length * 2 ||
+          this.x > window.innerWidth + this.length * 2 ||
           this.y < -this.length * 2 ||
-          this.y > canvas.height + this.length * 2
+          this.y > window.innerHeight + this.length * 2
         ) {
           this.reset();
         }
@@ -119,12 +118,9 @@ const NeonMeteors = () => {
         const glowColor = `rgba(${this.color}, 0.2)`;
 
         ctx.strokeStyle = baseColor;
-        // Desktop: Thick (7px) | Mobile: Thinner (3px)
-        ctx.lineWidth = isMobile ? 3 : 7;
+        ctx.lineWidth = isMobile ? 2 : 7;
         ctx.lineCap = "round";
 
-        // --- CRITICAL PERFORMANCE CHECK ---
-        // Only enable expensive shadowBlur on Desktop
         if (!isMobile) {
           ctx.shadowBlur = 20;
           ctx.shadowColor = glowColor;
@@ -150,16 +146,24 @@ const NeonMeteors = () => {
       meteors.push(new Meteor(true));
     }
 
-    const animate = () => {
+    const animate = (timestamp) => {
+      animationFrameId = requestAnimationFrame(animate);
+
+      // --- FPS THROTTLING ---
+      const elapsed = timestamp - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = timestamp - (elapsed % fpsInterval);
+
+      // Clear using the internal width/height (dpr adjusted)
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       meteors.forEach((meteor) => {
         meteor.update();
         meteor.draw();
       });
-      animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
