@@ -21,6 +21,11 @@
   height: 450px;
 }
 
+.nav-trigger,
+.nav-trigger * {
+  text-decoration: none !important;
+}
+
 .nav-trigger {
   width: 60px;
   height: 60px;
@@ -50,6 +55,7 @@
   font-weight: 700;
   color: #fff;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-decoration: none !important;
 }
 
 .nav-item {
@@ -158,7 +164,6 @@
     border-radius: 50%;
   }
 }
-
 @media (max-width: 768px) {
   .sidebar-container {
     right: 1rem;

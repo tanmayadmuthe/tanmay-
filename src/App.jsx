@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
-import Homepage from "./components/Homepage/Homepage";
-import useMousePosition from "../src/hooks/useMousePosition";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Homepage from "./Components/Homepage/Homepage";
+import About from "./Components/About/About";
 import NeonMeteors from "./Components/Meteor/NeonMeteors";
 import Sidebar from "./Sidebar/Sidebar";
+import useMousePosition from "./hooks/useMousePosition";
+import Projects from "./Components/Work/Projects";
+import Contact from "./Components/Contact/Contact";
+import Experience from "./Components/Experience/Experience";
 
 function App() {
   const { x: mouseX, y: mouseY } = useMousePosition();
@@ -15,11 +21,21 @@ function App() {
   }, [mouseX, mouseY]);
 
   return (
-    <div className="App">
-      <NeonMeteors />
-      <Homepage />
-      <Sidebar />
-    </div>
+    <Router>
+      <div className="App">
+        {/* Persistent Background Elements */}
+        <NeonMeteors />
+        <Sidebar />
+
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/experience" element={<Experience />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

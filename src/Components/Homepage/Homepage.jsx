@@ -6,10 +6,10 @@ import {
   FaGamepad,
   FaGithub,
   FaLinkedin,
-  FaTwitter,
   FaInstagram,
 } from "react-icons/fa";
 import { MdMovieFilter } from "react-icons/md";
+import { FaXTwitter } from "react-icons/fa6";
 import SplineScene from "../SplineScene/SplineScene";
 
 const titlesData = [
@@ -72,20 +72,26 @@ const Homepage = () => {
         </div>
 
         <div className="hero-buttons">
-          <button className="btn primary">Resume</button>
+          <a
+            href="https://drive.google.com/file/d/1wTHA2LWoKGw8JKcEJiZabua2zllL0oLC/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="btn primary">Resume</button>
+          </a>
         </div>
 
         <div className="social-icons">
-          <a href="#linkedin">
+          <a href="https://www.linkedin.com/in/tanmay-admuthe/" target="blank">
             <FaLinkedin />
           </a>
-          <a href="#github">
+          <a href="https://github.com/tanmayadmuthe" target="blank">
             <FaGithub />
           </a>
-          <a href="#twitter">
-            <FaTwitter />
+          <a href="https://x.com/TanmayAdmuthe" target="blank">
+            <FaXTwitter />
           </a>
-          <a href="#instagram">
+          <a href="https://www.instagram.com/blexed.tanmay/" target="blank">
             <FaInstagram />
           </a>
         </div>

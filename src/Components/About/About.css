@@ -1,0 +1,194 @@
+/* --- Main Container --- */
+.about-container {
+  min-height: 100vh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10%;
+  gap: 5rem;
+
+  position: relative;
+  z-index: 10;
+
+  animation: fadeInPage 1s ease-out;
+}
+
+.about-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.image-card {
+  position: relative;
+  width: 350px;
+  height: 450px;
+  border-radius: 20px;
+  padding: 10px;
+
+  /* Cyberpunk Border Effect */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.01)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  filter: grayscale(20%) contrast(110%);
+  transition: all 0.4s ease;
+}
+
+/* Hover Effect on Image */
+.image-card:hover .profile-img {
+  filter: grayscale(0%) contrast(100%);
+  transform: scale(1.02);
+}
+
+.image-card:hover {
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
+  border-color: var(--primary-color);
+}
+
+/* --- Right Side: Content --- */
+.about-content {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-title {
+  font-family: "Exo", sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  letter-spacing: 2px;
+}
+
+/* --- Glass Card for Bio --- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid var(--primary-color); /* Cyan accent line */
+  padding: 1.5rem 2rem;
+  border-radius: 0 10px 10px 0;
+  backdrop-filter: blur(5px);
+  margin-bottom: 2rem;
+}
+
+.bio-text {
+  font-family: "Balsamiq Sans", cursive; /* Or use sans-serif for cleaner look */
+  color: var(--subtext-color);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.highlight {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+/* --- Tech Grid --- */
+.sub-title {
+  font-family: "Exo", sans-serif;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+  gap: 1rem;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d0d0d0;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.tech-item svg {
+  font-size: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.tech-item span {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Hover Effects for Tech Items */
+.tech-item:hover {
+  background: rgba(0, 210, 255, 0.1);
+  border-color: var(--primary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+  color: #fff;
+}
+
+.tech-item:hover svg {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 1024px) {
+  .about-container {
+    flex-direction: column;
+    padding-top: 5rem;
+    gap: 3rem;
+  }
+
+  .about-visual {
+    width: 100%;
+  }
+
+  .image-card {
+    width: 280px;
+    height: 350px;
+  }
+
+  .section-title {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

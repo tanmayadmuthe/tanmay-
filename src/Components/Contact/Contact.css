@@ -1,0 +1,140 @@
+/* --- Container --- */
+.contact-container {
+  max-height: 100%;
+  max-width: 100%;
+  padding: 0 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  animation: fadeInPage 1s ease-out;
+}
+
+/* --- Header --- */
+.contact-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Reusing .section-title & .section-subtitle from Projects.css (or redefine here) */
+.section-title {
+  font-family: "Exo", sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+  letter-spacing: 2px;
+}
+
+.section-subtitle {
+  font-family: sans-serif;
+  color: var(--subtext-color);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* --- Layout --- */
+.contact-content {
+  display: flex;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* --- Form --- */
+.contact-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+.submit-btn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+/* --- Info Side --- */
+.contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center; /* Centers info items vertically since map is gone */
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--primary-color);
+}
+
+.info-icon {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.info-item h3 {
+  font-family: "Exo", sans-serif;
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.info-item p {
+  color: var(--subtext-color);
+  font-size: 0.9rem;
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .contact-content {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-title {
+    font-size: 3rem;
+  }
+}
