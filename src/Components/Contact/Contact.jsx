@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Contact.css";
 import {
   FaEnvelope,
@@ -8,10 +8,27 @@ import {
 } from "react-icons/fa";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here (e.g., EmailJS, Formspree)
-    alert("Message sent! (This is a demo)");
+
+    const { name, email, message } = formData;
+
+    const subject = `Portfolio Contact from ${name}`;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+
+    window.location.href = `mailto:tanmayadmuthe32@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${body}`;
   };
 
   return (
@@ -24,23 +41,42 @@ const Contact = () => {
       </div>
 
       <div className="contact-content">
-        {/* --- Left Side: Contact Form --- */}
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <input type="text" placeholder="Name" required />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+            />
           </div>
           <div className="form-group">
-            <input type="email" placeholder="Email" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
           </div>
           <div className="form-group">
-            <textarea placeholder="Message" rows="5" required></textarea>
+            <textarea
+              name="message"
+              placeholder="Message"
+              rows="5"
+              required
+              value={formData.message}
+              onChange={handleChange}
+            ></textarea>
           </div>
           <button type="submit" className="btn primary submit-btn">
             Send Message <FaPaperPlane />
           </button>
         </form>
 
-        {/* --- Right Side: Info --- */}
         <div className="contact-info">
           <div className="info-item">
             <FaEnvelope className="info-icon" />
