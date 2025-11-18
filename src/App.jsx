@@ -1,32 +1,26 @@
 import React, { useEffect } from "react";
-// nav removed
-import Hero from "./Components/Hero";
-import About from "./Components/About";
-import Education from "./Components/Education";
-import Experience from "./Components/Experience";
-import Projects from "./Components/Projects";
-import Skills from "./Components/Skills";
-import Contact from "./Components/Contact";
-import Footer from "./Components/Footer";
+import Homepage from "./components/Homepage/Homepage";
+import useMousePosition from "../src/hooks/useMousePosition";
+import NeonMeteors from "./Components/Meteor/NeonMeteors";
 
-export default function App() {
-  // keep any scroll effects you need for hero (e.g., no nav scrolled toggler)
+function App() {
+  const { x: mouseX, y: mouseY } = useMousePosition();
+
+  // --- CHANGED: Added a check for null ---
   useEffect(() => {
-    // if you had a nav scroll toggler, remove it or keep other effects
-  }, []);
+    // Only update the CSS variables if the mouse has moved
+    if (mouseX !== null && mouseY !== null) {
+      document.documentElement.style.setProperty("--mouseX", `${mouseX}px`);
+      document.documentElement.style.setProperty("--mouseY", `${mouseY}px`);
+    }
+  }, [mouseX, mouseY]);
 
   return (
-    <div className="app dark">
-      <main>
-        <Hero />
-        <About />
-        <Education />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
+    <div className="App">
+      <NeonMeteors />
+      <Homepage />
     </div>
   );
 }
+
+export default App;

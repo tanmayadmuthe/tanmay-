@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap");
+
+:root {
+  /* --- CRITICAL CHANGE --- */
+  /* MUST be transparent so we can see the meteors behind it */
+  --bg-color: transparent;
+  /* ----------------------- */
+
+  --spotlight-color: rgba(255, 255, 255, 0.08);
+  --text-color: #f0f0f0;
+  --subtext-color: #a0a0a0;
+  --title-height: 2.5rem;
+  --mouseX: 50vw;
+  --mouseY: 50vh;
+}
+
+.homepage-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Ensure this sits on top of the meteors */
+  position: relative;
+  z-index: 1;
+
+  background: radial-gradient(
+    circle 600px at var(--mouseX) var(--mouseY),
+    var(--spotlight-color),
+    var(--bg-color) /* Uses the transparent color */
+  );
+
+  color: var(--text-color);
+  text-align: center;
+  overflow: hidden;
+  transition: background 0.1s ease-out;
+
+  mask-image: radial-gradient(
+    circle 400px at var(--mouseX) var(--mouseY),
+    white 20%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 400px at var(--mouseX) var(--mouseY),
+    white 20%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+}
+
+/* ... Rest of the file stays the same ... */
+
+/* --- Content Styling --- */
+.hero-content {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-content h1 {
+  font-family: "Balsamiq Sans", cursive;
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+
+  /* Shimmer Gradient */
+  background: linear-gradient(90deg, #ff00ff, #007bff, #00ffff, #ff00ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3s linear infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* --- NEW: Title Slider Styles --- */
+.title-slider {
+  height: var(--title-height);
+  line-height: var(--title-height);
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+  /* --- FADE MASK: Top and Bottom of list --- */
+  /* This makes the scrolling text fade in/out at the edges */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    white 20%,
+    white 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    white 20%,
+    white 80%,
+    transparent 100%
+  );
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* --- BOUNCY ANIMATION --- */
+  /* This cubic-bezier creates the "spring" effect */
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.title-item {
+  /* Structure for individual titles */
+  font-size: 1.5rem;
+  color: var(--subtext-color);
+  margin: 0;
+  height: var(--title-height);
+  line-height: var(--title-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-weight: 600;
+}
+
+.title-item svg {
+  font-size: 1.4rem;
+  opacity: 0.9;
+  /* Optional: Add a color to icons to make them pop */
+  /* color: #007bff; */
+}
+/* --- END Title Slider Styles --- */
+
+/* --- Button Styling --- */
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+
+  /* Glassmorphism */
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text-color);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.btn svg {
+  font-size: 0.9rem;
+}
+
+/* --- Animation Keyframes --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: 0% center;
+  }
+}
+
+/* --- Media Query --- */
+@media (max-width: 768px) {
+  :root {
+    /* Smaller height for mobile */
+    --title-height: 2rem;
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  .title-item {
+    font-size: 1.2rem;
+  }
+  .hero-buttons {
+    flex-direction: column;
+  }
+}
