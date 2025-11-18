@@ -6,7 +6,7 @@ import About from "./Components/About/About";
 import NeonMeteors from "./Components/Meteor/NeonMeteors";
 import Sidebar from "./Sidebar/Sidebar";
 import useMousePosition from "./hooks/useMousePosition";
-import Projects from "./Components/Work/Projects";
+import Projects from "./Components/Projects/Projects";
 import Contact from "./Components/Contact/Contact";
 import Experience from "./Components/Experience/Experience";
 

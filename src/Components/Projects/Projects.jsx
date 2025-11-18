@@ -11,7 +11,6 @@ import {
   FaMicrochip,
 } from "react-icons/fa";
 
-// Project Data extracted from Resume
 const projectsData = [
   {
     title: "Interview Easy",
@@ -81,7 +80,11 @@ const Projects = () => {
 
       <div className="projects-grid">
         {projectsData.map((project, index) => (
-          <div className="project-card" key={index}>
+          <div
+            className="project-card"
+            key={index}
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
             <div className="card-icon">{project.icon}</div>
             <div className="card-content">
               <h3>{project.title}</h3>

@@ -1,20 +1,29 @@
-/* --- Container --- */
 .projects-container {
   min-height: 100vh;
   max-width: 100%;
-  padding: 8rem 10% 5rem; /* Top padding clears fixed header if any */
+  padding: 8rem 10% 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   z-index: 10;
-  animation: fadeInPage 1s ease-out;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* --- Header --- */
+.projects-container::-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .projects-header {
   text-align: center;
   margin-bottom: 4rem;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 .section-title {
@@ -34,16 +43,15 @@
   letter-spacing: 1px;
 }
 
-/* --- Grid Layout --- */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
   max-width: 1400px;
+  padding-bottom: 2rem;
 }
 
-/* --- Project Card --- */
 .project-card {
   position: relative;
   background: rgba(255, 255, 255, 0.03);
@@ -51,22 +59,27 @@
   border-radius: 20px;
   padding: 2rem;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   backdrop-filter: blur(10px);
+
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover Effect: Lift & Glow */
 .project-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(1.02);
   border-color: var(--primary-color);
-  box-shadow: 0 10px 30px -10px rgba(0, 210, 255, 0.3);
+  box-shadow: 0 20px 40px -15px rgba(0, 210, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
+  z-index: 2;
 }
 
-/* --- Card Icon --- */
 .card-icon {
   font-size: 2.5rem;
   color: var(--primary-color);
@@ -78,9 +91,13 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
 }
 
-/* --- Content --- */
+.project-card:hover .card-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
 .card-content h3 {
   font-family: "Exo", sans-serif;
   font-size: 1.8rem;
@@ -96,7 +113,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* --- Tech Stack Pills --- */
 .tech-stack {
   display: flex;
   flex-wrap: wrap;
@@ -112,11 +128,16 @@
   padding: 4px 12px;
   border-radius: 50px;
   font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-/* --- Links --- */
+.project-card:hover .tech-tag {
+  border-color: rgba(0, 210, 255, 0.5);
+  background: rgba(0, 210, 255, 0.15);
+}
+
 .card-links {
-  margin-top: auto; /* Push to bottom */
+  margin-top: auto;
   display: flex;
   gap: 1rem;
 }
@@ -130,13 +151,15 @@
   font-size: 0.9rem;
   font-weight: 600;
   transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
 .link-btn:hover {
   color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* --- Glow Effect Helper --- */
 .card-glow {
   position: absolute;
   top: 0;
@@ -145,8 +168,8 @@
   bottom: 0;
   background: radial-gradient(
     circle at top right,
-    rgba(0, 210, 255, 0.1),
-    transparent 40%
+    rgba(0, 210, 255, 0.15),
+    transparent 50%
   );
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -157,7 +180,28 @@
   opacity: 1;
 }
 
-/* --- Mobile --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .projects-container {
     padding: 5rem 5%;
