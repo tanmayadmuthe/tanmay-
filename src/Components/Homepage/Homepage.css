@@ -1,202 +1,252 @@
-/* --- Custom Font Import --- */
 @font-face {
   font-family: "Exo";
-  /* Ensure 'Exodar-Outline.ttf' is inside src/fonts/ folder */
   src: url("./fonts/Exodar-Outline.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
-/* --- Root Variables --- */
 :root {
-  --bg-color: transparent; /* Allows meteors to show through */
-  --spotlight-color: rgba(255, 255, 255, 0.15); /* Brighter beam */
+  --bg-color: transparent;
+  --spotlight-color: rgba(255, 255, 255, 0.12);
   --text-color: #ffffff;
   --subtext-color: #d0d0d0;
-  --title-height: 2.5rem;
+  --title-height: 3rem;
   --mouseX: 50vw;
   --mouseY: 50vh;
+  --primary-color: #00d2ff;
 }
 
-/* --- Main Container with Grid Background --- */
 .homepage-container {
   min-height: 100vh;
-  width: 100%;
+  max-width: 100%;
+
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
+  padding-left: 8%;
+  padding-right: 2%;
+  gap: 2rem;
 
   position: relative;
-  z-index: 10; /* Sits above Meteors, below Sidebar */
+  z-index: 10;
 
-  /* === LAYERED BACKGROUND === */
-  background-image: 
-    /* 1. Spotlight (Top) */ radial-gradient(
-      circle 600px at var(--mouseX) var(--mouseY),
+  background-image: radial-gradient(
+      circle 800px at var(--mouseX) var(--mouseY),
       var(--spotlight-color),
       transparent 80%
     ),
-    /* 2. Horizontal Grid Lines (Faint Cyan) */
-      linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    /* 3. Vertical Grid Lines (Faint Cyan) */
-      linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
 
-  /* Size of grid squares */
   background-size: 100% 100%, 60px 60px, 60px 60px;
   background-color: var(--bg-color);
 
   color: var(--text-color);
-  text-align: center;
   overflow: hidden;
   transition: background 0.1s ease-out;
 
-  /* === VISIBILITY MASK === */
-  /* Brighter mask so text is visible even when mouse is far */
   mask-image: radial-gradient(
-    circle 500px at var(--mouseX) var(--mouseY),
-    white 50%,
-    rgba(255, 255, 255, 0.5) 100%
+    circle 800px at var(--mouseX) var(--mouseY),
+    white 40%,
+    rgba(255, 255, 255, 0.4) 100%
   );
   -webkit-mask-image: radial-gradient(
-    circle 500px at var(--mouseX) var(--mouseY),
-    white 50%,
-    rgba(255, 255, 255, 0.5) 100%
+    circle 800px at var(--mouseX) var(--mouseY),
+    white 40%,
+    rgba(255, 255, 255, 0.4) 100%
   );
 }
 
 .hero-content {
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
   animation: fadeIn 1.5s ease-in-out;
+  z-index: 20;
 }
 
-.hero-content h1 {
+.hero-visual {
+  flex: 1;
+  height: 80vh;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  animation: slideInRight 1.5s ease-out;
+
+  mask-image: radial-gradient(circle at center, white 50%, transparent 200%);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    white 50%,
+    transparent 100%
+  );
+}
+
+.hero-overline {
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  letter-spacing: 3px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.main-title {
   font-family: "Exo", sans-serif;
-  font-size: 5rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
-
-  background: linear-gradient(90deg, #ff00ff, #007bff, #00ffff, #ff00ff);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3s linear infinite;
-
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.2));
+  font-size: 8rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: #fff;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .title-slider {
   height: var(--title-height);
   line-height: var(--title-height);
   overflow: hidden;
-  margin-bottom: 2rem;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    white 20%,
-    white 80%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    white 20%,
-    white 80%,
-    transparent 100%
-  );
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
 .title-wrapper {
   display: flex;
   flex-direction: column;
-  /* Transition handled in JS, but kept here as fallback */
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .title-item {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--subtext-color);
   margin: 0;
   height: var(--title-height);
   line-height: var(--title-height);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  font-weight: 600;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  gap: 1rem;
+  font-weight: 400;
+  letter-spacing: 2px;
 }
 
 .title-item svg {
-  font-size: 1.4rem;
-  opacity: 1;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+  font-size: 1.8rem;
+  color: var(--primary-color);
 }
 
 .hero-buttons {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.8rem 2.5rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--text-color);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+.btn.primary {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
 }
 
-.btn svg {
-  font-size: 0.9rem;
+.btn.primary:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+.btn.secondary:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+}
+
+.social-icons {
+  display: flex;
+  gap: 2rem;
+  margin-top: auto;
+}
+
+.social-icons a {
+  color: var(--subtext-color);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
-@keyframes shimmer {
+
+@keyframes slideInRight {
   from {
-    background-position: 200% center;
+    opacity: 0;
+    transform: translateX(50px);
   }
   to {
-    background-position: 0% center;
+    opacity: 1;
+    transform: translateX(0);
   }
 }
-@media (max-width: 768px) {
-  :root {
-    --title-height: 2rem;
+
+@media (max-width: 1024px) {
+  .homepage-container {
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5rem;
   }
-  .hero-content h1 {
-    font-size: 3rem;
+  .hero-content {
+    max-width: 90%;
+    align-items: center;
+    text-align: center;
+  }
+  .main-title {
+    font-size: 5rem;
+  }
+  .hero-visual {
+    width: 100%;
+    height: 50vh;
+    margin-top: 2rem;
   }
   .title-item {
-    font-size: 1.2rem;
+    justify-content: center;
   }
-  .hero-buttons {
-    flex-direction: column;
+  .social-icons {
+    justify-content: center;
+    margin-bottom: 2rem;
   }
 }

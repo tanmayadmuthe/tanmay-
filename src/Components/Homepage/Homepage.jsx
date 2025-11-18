@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
-import { FaCode, FaCoffee, FaGamepad } from "react-icons/fa";
-import { MdMovieFilter, MdOutlineModeOfTravel } from "react-icons/md";
+import {
+  FaCode,
+  FaCoffee,
+  FaGamepad,
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaInstagram,
+} from "react-icons/fa";
+import { MdMovieFilter } from "react-icons/md";
+import SplineScene from "../SplineScene/SplineScene";
 
 const titlesData = [
   { icon: <FaCode />, text: "Developer" },
   { icon: <MdMovieFilter />, text: "Anime Nerd" },
   { icon: <FaCoffee />, text: "Coffee Addict" },
   { icon: <FaGamepad />, text: "Gamer" },
-  { icon: <MdOutlineModeOfTravel />, text: "Traveler" },
 ];
 
 const Homepage = () => {
@@ -30,7 +38,6 @@ const Homepage = () => {
         setIsTransitioning(false);
         setCurrentIndex(0);
       }, 600);
-
       return () => clearTimeout(timeout);
     }
   }, [currentIndex]);
@@ -38,7 +45,9 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="hero-content">
-        <h1>I am Tanmay</h1>
+        <p className="hero-overline">HELLO, I'M</p>
+        <h1 className="main-title">TANMAY</h1>
+
         <div className="title-slider">
           <div
             className="title-wrapper"
@@ -61,6 +70,29 @@ const Homepage = () => {
             </div>
           </div>
         </div>
+
+        <div className="hero-buttons">
+          <button className="btn primary">Resume</button>
+        </div>
+
+        <div className="social-icons">
+          <a href="#linkedin">
+            <FaLinkedin />
+          </a>
+          <a href="#github">
+            <FaGithub />
+          </a>
+          <a href="#twitter">
+            <FaTwitter />
+          </a>
+          <a href="#instagram">
+            <FaInstagram />
+          </a>
+        </div>
+      </div>
+
+      <div className="hero-visual">
+        <SplineScene />
       </div>
     </div>
   );
